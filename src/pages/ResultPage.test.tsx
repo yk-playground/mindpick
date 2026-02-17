@@ -96,6 +96,29 @@ describe('ResultPage', () => {
     spy.mockRestore()
   })
 
+  it('handleShare 원본 경로가 실행되고 2초 후 상태가 복원된다', async () => {
+    // spyOn 없이 원본 handleShare → buildShareUrl → copyToClipboard 전체 경로
+    Object.defineProperty(navigator, 'clipboard', {
+      value: { writeText: vi.fn().mockResolvedValue(undefined) },
+      writable: true,
+      configurable: true,
+    })
+    const user = userEvent.setup()
+    const encoded = encodeResult('color-personality', 'warm-coral')
+    renderResultPage(encoded)
+
+    await user.click(screen.getByText('결과 공유하기'))
+    expect(await screen.findByText('복사 완료!')).toBeInTheDocument()
+
+    // 2초 후 setTimeout 콜백으로 copied=false → 원래 텍스트 복원
+    await waitFor(
+      () => {
+        expect(screen.getByText('결과 공유하기')).toBeInTheDocument()
+      },
+      { timeout: 3000 }
+    )
+  })
+
   it('스트레스 동물 퀴즈 결과도 렌더링할 수 있다', () => {
     const encoded = encodeResult('stress-animal', 'lion')
     renderResultPage(encoded)
