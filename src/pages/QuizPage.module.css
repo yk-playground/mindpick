@@ -1,0 +1,101 @@
+.container {
+  padding: 0 16px 24px;
+}
+
+.quizTitle {
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #3a3050;
+  margin-bottom: 16px;
+}
+
+.questionCard {
+  background: white;
+  border-radius: 20px;
+  padding: 28px 20px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+}
+
+.fadeIn {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.fadeOut {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+.questionNumber {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #a18cd1;
+  margin-bottom: 8px;
+}
+
+.questionText {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #3a3050;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.optionButton {
+  width: 100%;
+  padding: 14px 16px;
+  background: #f8f4ff;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  color: #4a3a5a;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.optionButton:hover {
+  background: #f0e8ff;
+  border-color: #c8b0e8;
+  transform: translateX(4px);
+}
+
+.optionButton:active {
+  background: #e8d8ff;
+  transform: scale(0.98);
+}
+
+.notFound {
+  text-align: center;
+  padding: 60px 16px;
+  font-size: 1.1rem;
+  color: #8a7a9a;
+}

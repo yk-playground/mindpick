@@ -1,0 +1,110 @@
+.container {
+  padding: 0 16px 24px;
+}
+
+.resultCard {
+  background: white;
+  border: 2px solid;
+  border-radius: 24px;
+  padding: 32px 20px;
+  text-align: center;
+  margin: 12px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.emoji {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.traits {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.trait {
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.description {
+  font-size: 0.95rem;
+  color: #4a3a5a;
+  line-height: 1.7;
+  text-align: left;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.shareButton,
+.retryButton,
+.homeButton {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  border: none;
+  font-family: inherit;
+}
+
+.shareButton {
+  background: linear-gradient(135deg, #ff9a9e, #a18cd1);
+  color: white;
+}
+
+.retryButton {
+  background: #f8f4ff;
+  color: #7a6a8a;
+  border: 2px solid #e8d8f8;
+}
+
+.homeButton {
+  background: transparent;
+  color: #a090b0;
+}
+
+.shareButton:hover,
+.retryButton:hover,
+.homeButton:hover {
+  opacity: 0.8;
+}
+
+.notFound {
+  text-align: center;
+  padding: 60px 16px;
+}
+
+.notFound p {
+  font-size: 1.1rem;
+  color: #8a7a9a;
+  margin-bottom: 20px;
+}
+
+.homeLink {
+  color: #a18cd1;
+  font-weight: 600;
+  text-decoration: none;
+}

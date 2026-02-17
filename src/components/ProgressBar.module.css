@@ -1,0 +1,33 @@
+.container {
+  margin-bottom: 20px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  color: #a090b0;
+}
+
+.count {
+  font-weight: 600;
+}
+
+.percentage {
+  font-weight: 500;
+}
+
+.track {
+  height: 8px;
+  background: #f0e8f8;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff9a9e, #fad0c4, #a18cd1);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}

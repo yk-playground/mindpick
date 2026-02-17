@@ -1,0 +1,31 @@
+.adBanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f0ff 0%, #fff0f5 100%);
+  border: 1px dashed #e0c8f0;
+  border-radius: 12px;
+  min-height: 60px;
+  margin: 8px 0;
+}
+
+.label {
+  font-size: 0.7rem;
+  color: #c0a0d0;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.top {
+  min-height: 60px;
+}
+
+.bottom {
+  min-height: 90px;
+  margin-top: 16px;
+}
+
+.sidebar {
+  min-height: 250px;
+  width: 100%;
+}
