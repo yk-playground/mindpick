@@ -1,9 +1,6 @@
-import { encodeResult } from './scoring'
-
 export function buildShareUrl(quizId: string, resultId: string): string {
-  const encoded = encodeResult(quizId, resultId)
-  const base = window.location.origin + window.location.pathname
-  return `${base}#/result/${encoded}`
+  const base = window.location.origin + import.meta.env.BASE_URL
+  return `${base}share/${quizId}/${resultId}/`
 }
 
 export async function copyToClipboard(text: string): Promise<boolean> {
