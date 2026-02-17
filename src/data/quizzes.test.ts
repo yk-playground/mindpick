@@ -59,6 +59,21 @@ describe('colorPersonalityQuiz.calculateResult', () => {
     const result = colorPersonalityQuiz.calculateResult({ E: 2, I: 8, F: 2, T: 8, J: 8, P: 2, N: 0 })
     expect(result).toBe('deep-navy')
   })
+
+  it('외향적+사고적+인식적 점수에서 sunny-yellow를 반환한다', () => {
+    const result = colorPersonalityQuiz.calculateResult({ E: 10, I: 2, F: 2, T: 8, J: 2, P: 8, N: 3 })
+    expect(result).toBe('sunny-yellow')
+  })
+
+  it('내향적+감정적+판단적 점수에서 soft-peach를 반환한다', () => {
+    const result = colorPersonalityQuiz.calculateResult({ E: 2, I: 8, F: 6, T: 3, J: 8, P: 2, N: 0 })
+    expect(result).toBe('soft-peach')
+  })
+
+  it('어떤 분기에도 해당하지 않을 때 bright-mint를 반환한다', () => {
+    const result = colorPersonalityQuiz.calculateResult({ E: 2, I: 8, F: 3, T: 4, J: 3, P: 5, N: 0 })
+    expect(result).toBe('bright-mint')
+  })
 })
 
 describe('stressAnimalQuiz.calculateResult', () => {

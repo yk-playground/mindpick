@@ -1,9 +1,10 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Routes, Route } from 'react-router-dom'
 import ResultPage from './ResultPage'
 import { encodeResult } from '../utils/scoring'
+import * as shareModule from '../utils/share'
 
 function renderResultPage(encoded: string) {
   return render(
@@ -56,9 +57,7 @@ describe('ResultPage', () => {
   })
 
   it('공유 버튼 클릭 시 복사 완료 메시지를 표시한다', async () => {
-    Object.assign(navigator, {
-      clipboard: { writeText: vi.fn().mockResolvedValue(undefined) },
-    })
+    const spy = vi.spyOn(shareModule, 'copyToClipboard').mockResolvedValue(true)
     const user = userEvent.setup()
     const encoded = encodeResult('color-personality', 'warm-coral')
     renderResultPage(encoded)
@@ -66,6 +65,24 @@ describe('ResultPage', () => {
     await user.click(screen.getByText('결과 공유하기'))
 
     expect(await screen.findByText('복사 완료!')).toBeInTheDocument()
+    spy.mockRestore()
+  })
+
+  it('클립보드 복사 실패 시 버튼 텍스트가 변경되지 않는다', async () => {
+    const spy = vi.spyOn(shareModule, 'copyToClipboard').mockResolvedValue(false)
+    const user = userEvent.setup()
+    const encoded = encodeResult('color-personality', 'warm-coral')
+    renderResultPage(encoded)
+
+    await user.click(screen.getByText('결과 공유하기'))
+
+    // copyToClipboard가 false를 반환하므로 copied 상태가 변경되지 않아야 함
+    await waitFor(() => {
+      expect(spy).toHaveBeenCalled()
+    })
+    expect(screen.getByText('결과 공유하기')).toBeInTheDocument()
+    expect(screen.queryByText('복사 완료!')).not.toBeInTheDocument()
+    spy.mockRestore()
   })
 
   it('스트레스 동물 퀴즈 결과도 렌더링할 수 있다', () => {

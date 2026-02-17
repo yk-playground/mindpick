@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Routes, Route } from 'react-router-dom'
 import QuizPage from './QuizPage'
@@ -9,6 +9,7 @@ function renderQuizPage(quizId: string) {
     <MemoryRouter initialEntries={[`/quiz/${quizId}`]}>
       <Routes>
         <Route path="/quiz/:quizId" element={<QuizPage />} />
+        <Route path="/result/:encoded" element={<div data-testid="result-page">결과 페이지</div>} />
       </Routes>
     </MemoryRouter>
   )
@@ -48,13 +49,50 @@ describe('QuizPage', () => {
     renderQuizPage('stress-animal')
 
     expect(screen.getByText('Q1.')).toBeInTheDocument()
+    await user.click(screen.getByText('밤새워서라도 끝낸다'))
 
-    const firstOption = screen.getByText('밤새워서라도 끝낸다')
-    await user.click(firstOption)
+    await waitFor(() => {
+      expect(screen.getByText('Q2.')).toBeInTheDocument()
+    })
+  })
 
-    // 애니메이션 타이머(400ms) 대기
-    await new Promise((r) => setTimeout(r, 500))
+  it('마지막 질문 답변 후 결과 페이지로 이동한다', async () => {
+    const user = userEvent.setup()
+    renderQuizPage('stress-animal')
 
-    expect(screen.getByText('Q2.')).toBeInTheDocument()
+    // stress-animal 퀴즈는 8문항 — 전부 첫 번째 선택지를 클릭
+    for (let i = 0; i < 8; i++) {
+      const buttons = screen.getAllByRole('button')
+      await user.click(buttons[0])
+
+      if (i < 7) {
+        await waitFor(() => {
+          expect(screen.getByText(`Q${i + 2}.`)).toBeInTheDocument()
+        })
+      }
+    }
+
+    await waitFor(() => {
+      expect(screen.getByTestId('result-page')).toBeInTheDocument()
+    })
+  }, 15000)
+
+  it('애니메이션 중에는 중복 클릭을 무시한다', async () => {
+    const user = userEvent.setup()
+    renderQuizPage('stress-animal')
+
+    expect(screen.getByText('Q1.')).toBeInTheDocument()
+
+    // 빠르게 두 번 클릭 (두 번째는 무시되어야 함)
+    await user.click(screen.getByText('밤새워서라도 끝낸다'))
+    const buttonsWhileAnimating = screen.getAllByRole('button')
+    await user.click(buttonsWhileAnimating[1])
+
+    await waitFor(() => {
+      expect(screen.getByText('Q2.')).toBeInTheDocument()
+    })
+
+    // Q3이 아닌 Q2에 있어야 함 (두 번째 클릭이 무시됨)
+    expect(screen.queryByText('Q3.')).not.toBeInTheDocument()
   })
 })
