@@ -74,6 +74,18 @@ describe('colorPersonalityQuiz.calculateResult', () => {
     const result = colorPersonalityQuiz.calculateResult({ E: 2, I: 8, F: 3, T: 4, J: 3, P: 5, N: 0 })
     expect(result).toBe('bright-mint')
   })
+
+  it('점수 키가 누락되어도 0으로 폴백하여 정상 동작한다', () => {
+    // E, I만 있고 나머지 키 없음 → || 0 폴백 동작 확인
+    // E>I, F=0=T(isFeeling=false), J=0=P(isJudging=false) → sunny-yellow
+    const result = colorPersonalityQuiz.calculateResult({ E: 10, I: 2 })
+    expect(result).toBe('sunny-yellow')
+  })
+
+  it('빈 점수 객체에서도 bright-mint를 반환한다', () => {
+    const result = colorPersonalityQuiz.calculateResult({})
+    expect(result).toBe('bright-mint')
+  })
 })
 
 describe('stressAnimalQuiz.calculateResult', () => {
@@ -100,5 +112,10 @@ describe('stressAnimalQuiz.calculateResult', () => {
   it('planner 점수가 가장 높으면 owl을 반환한다', () => {
     const result = stressAnimalQuiz.calculateResult({ fighter: 1, sleeper: 2, social: 3, practical: 1, planner: 10 })
     expect(result).toBe('owl')
+  })
+
+  it('매핑에 없는 키일 경우 beaver를 폴백으로 반환한다', () => {
+    const result = stressAnimalQuiz.calculateResult({ unknown: 10 })
+    expect(result).toBe('beaver')
   })
 })

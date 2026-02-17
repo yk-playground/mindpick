@@ -23,6 +23,17 @@ describe('ResultPage', () => {
     expect(screen.getByText('홈으로 돌아가기')).toBeInTheDocument()
   })
 
+  it('URL에 encoded 파라미터가 없으면 에러 메시지를 표시한다', () => {
+    render(
+      <MemoryRouter initialEntries={['/result-no-param']}>
+        <Routes>
+          <Route path="/result-no-param" element={<ResultPage />} />
+        </Routes>
+      </MemoryRouter>
+    )
+    expect(screen.getByText('결과를 찾을 수 없어요 :(')).toBeInTheDocument()
+  })
+
   it('유효한 결과를 올바르게 렌더링한다', () => {
     const encoded = encodeResult('color-personality', 'warm-coral')
     renderResultPage(encoded)

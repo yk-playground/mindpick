@@ -21,6 +21,17 @@ describe('QuizPage', () => {
     expect(screen.getByText('테스트를 찾을 수 없어요 :(')).toBeInTheDocument()
   })
 
+  it('URL에 quizId 파라미터가 없으면 에러 메시지를 표시한다', () => {
+    render(
+      <MemoryRouter initialEntries={['/quiz-no-param']}>
+        <Routes>
+          <Route path="/quiz-no-param" element={<QuizPage />} />
+        </Routes>
+      </MemoryRouter>
+    )
+    expect(screen.getByText('테스트를 찾을 수 없어요 :(')).toBeInTheDocument()
+  })
+
   it('첫 번째 질문을 렌더링한다', () => {
     renderQuizPage('color-personality')
     expect(screen.getByText('Q1.')).toBeInTheDocument()
