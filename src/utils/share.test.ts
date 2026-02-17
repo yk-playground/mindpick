@@ -4,8 +4,7 @@ import { buildShareUrl, copyToClipboard } from './share'
 describe('buildShareUrl', () => {
   it('올바른 형식의 공유 URL을 생성한다', () => {
     const url = buildShareUrl('color-personality', 'warm-coral')
-    expect(url).toContain('#/result/')
-    expect(url).toContain(btoa('color-personality:warm-coral'))
+    expect(url).toContain('/share/color-personality/warm-coral/')
   })
 
   it('현재 origin과 pathname을 기반으로 URL을 생성한다', () => {
